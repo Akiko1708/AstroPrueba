@@ -1,27 +1,118 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/navigation.astro';
+import Footer from '../components/footer.astro';
+
+const pageTitle = "Acerca de mi";
+
+const identify = {
+    firstName: "Zihanya",
+    country: "Mexico",
+    occupation: "Programadora",
+    hobbies: [
+        "leer",
+        "jugar videojuegos",
+        "aprender lenguajes de programacion",
+    ],
+};
+
+const skills = [
+    { name: "HTML", level: "Avanzado" },
+    { name: "CSS", level: "Intermedio" },
+    { name: "JavaScript", level: "Intermedio" },
+    { name: "Astro", level: "Principiante" },
+];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+const operatingSystem = "Linux";
+const quantity = 3;
+const footwear = "boots";
+const student = false;
+
+const skillColor = "crimson";
+const fontWeight = "bold";
+const textCase = "uppercase";
+---
+
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-        <title>Astro</title>
+        <title>{pageTitle}</title>
+        <style define:vars={{skillColor,fontWeight, textCase}}>
+            h1 {
+                color: purple;
+                font-size: 4rem;
+            }
+            .skill {
+                color: var(--skillColor);
+                font-weight: var(--fontWeight);
+                text-transform: var(--textCase);
+            }
+        </style>
     </head>
     <body>
-        <h1>Mi Sitio de Astro</h1>
-        <h1>Acerca de mi</h1>
-        <h2>... y mi nuevo sitio de Astro</h2>
-        <p>
-            Estoy trabajando en mi sitio web 
-            con Astro atraves de el tutoria de
-            introducción. Esta es mi segunda 
-            pagina en el sitio, y la primera
-            que contruyo.
-        </p>
-        <p>
-            Este sitio se actualiza
-            constantemente conforme complete el 
-            tutorial, asi que vuelve pronto para 
-            ver las novedades!
-        </p>
+        <Navigation />
+
+        <h1 class="h1">{pageTitle}</h1>
+        <p>Algunas cosas sobre mí:</p>
+        <ul>
+            <li>Nombre: {identify.firstName}</li>
+            <li>
+                País: {identify.country} y trabajo como {identify.occupation}
+            </li>
+
+            {
+                identify.hobbies.length >= 2 && (
+                    <li>
+                        Dos hobbies que tengo son: {identify.hobbies[0]} y{" "}
+                        {identify.hobbies[1]}
+                    </li>
+                )
+            }
+        </ul>
+        <h2>Mis habilidades son:</h2>
+        <ul>
+            {
+                skills.map((skill) => (
+                    <li class="skill">
+                        {skill.name} - {skill.level}
+                    </li>
+                ))
+            }
+        </ul>
+
+        {happy && <p>Estoy feliz de estar aprendiendo Astro!</p>}
+        {finished && <p>He terminado mi objetivo de aprender Astro.</p>}
+        {
+            goal === 3 ? (
+                <p>
+                    He alcanzado mi objetivo de aprender 3 nuevas habilidades
+                    este año.
+                </p>
+            ) : (
+                <p>
+                    Aún no he alcanzado mi objetivo de aprender 3 nuevas
+                    habilidades este año.
+                </p>
+            )
+        }
+        <p>{operatingSystem}.</p>
+        <p>Tengo {quantity + 8} pares de {footwear}.</p>
+        {!student && <p>No soy estudiante actualmente.</p>}
+
+        {
+            operatingSystem === "Linux" ? (
+                <p>Estoy usando Linux.</p>
+            ) : (
+                <p>No estoy usando Linux.</p>
+            )
+        }
+        <Footer />
     </body>
 </html>
